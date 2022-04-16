@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function write_comment(){
+	echo "Input your  comment:"
+	read comment
+	if [[ "$comment" == "-" ]]
+        then
+		echo "no comment"
+		return 1
+	fi
+	echo "Your comment:"
+	echo $comment
+	comment=$1":  "$comment"\n"
+	printf "$comment" >> /home/keszinaj/myconfig.txt
+	return 0
+}
+if (( $# != 1))
+then 
+    echo "wrong arguments"
+    exit 1
+fi
+sudo apt-get install $1
+retVal=$?
+if [ $retVal -ne 0 ]; then
+    echo "Error"
+    exit 1
+fi
+write_comment $1
+exit 1
